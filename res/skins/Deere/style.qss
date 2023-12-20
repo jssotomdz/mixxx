@@ -223,7 +223,7 @@ WLibrarySidebar {
 }
 
 /* Prevent OS-style checkbox from being rendered underneath the custom style. */
-WTrackTableView::item,
+#LibraryPlayedCheckbox::item,
 #LibraryBPMButton::item {
   border: 0px;
 }
@@ -231,7 +231,8 @@ WTrackTableView::item,
 /* Selected rows in Tree and Tracks table */
 WTrackTableView::item:selected,
 WLibrarySidebar::item:selected,
-#LibraryBPMButton::item:selected {
+#LibraryBPMButton::item:selected,
+#LibraryPlayedCheckbox::item:selected {
   color: #D6D6D6;
   background-color: #006596;
 }
@@ -279,10 +280,10 @@ WBeatSpinBox,
 }
 
 /* checkbox in library "Played" column */
-WTrackTableView::indicator:unchecked {
+#LibraryPlayedCheckbox::indicator:unchecked {
   image: url(skin:/../Deere/icon/ic_library_checkbox.svg);
 }
-WTrackTableView::indicator:checked {
+#LibraryPlayedCheckbox::indicator:checked {
   image: url(skin:/../Deere/icon/ic_library_checkbox_checked.svg);
 }
 
@@ -2044,6 +2045,16 @@ WSearchLineEdit QAbstractScrollArea,
     color: #fff;
     /* remove OS focus indicator */
     outline: none;
+    }
+    /* required on Windows since the QAbstractItemViews don't inherit styles from
+       the respective QComboBoxes */
+    WEffectSelector QAbstractItemView,
+    WEffectChainPresetSelector QAbstractItemView,
+    WSearchLineEdit QAbstractItemView {
+      selection-color: #fff;
+      selection-background-color: #565353;
+      border: 0px;
+      outline: none;
     }
     /* Remove 3D border from unchecked effects checkmark space */
     WEffectSelector::item:selected,

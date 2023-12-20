@@ -804,6 +804,8 @@ WLibrary {
 
 WEffectChainPresetButton::menu-indicator {
   image: url(skin:../LateNight/classic/buttons/btn__fx_settings.svg) no-repeat center center;
+  width: 18px;
+  height: 18px;
 }
 
 #DryWetKnob,
@@ -879,6 +881,8 @@ WEffectSelector,
   /* Arrow size is set in C++ to match the library font size */
   WSearchLineEdit::down-arrow {
     image: url(skin:../LateNight/classic/buttons/btn__fx_selector_down.svg);
+    width: 16px;
+    height: 24px;
     }
     WEffectSelector::down-arrow:hover,
     WEffectChainPresetSelector::down-arrow:hover,
@@ -1099,10 +1103,10 @@ WSearchLineEdit QAbstractScrollArea,
 #SkinSettingsLabelButton,
 #SkinSettingsNumToggleHeader[displayValue="1"],
 WSearchLineEdit,
+WTrackTableView,
 #LibraryBPMSpinBox,
 #LibraryBPMButton::item,
-WTrackTableView,
-WTrackTableView::indicator,
+#LibraryPlayedCheckbox::item,
 WLibraryTextBrowser,
 WLibrarySidebar,
 #LibraryFeatureControls QLabel,
@@ -2065,15 +2069,11 @@ WLibraryTextBrowser:focus {
   border: 1px solid #d09300;
 }
 
-/* Prevent OS-style checkbox from being rendered underneath the custom style. */
-WTrackTableView::item,
-#LibraryBPMButton::item {
-  border: 0px;
-}
 /* Selected rows in Tree and Tracks table */
 WLibrarySidebar::item:selected,
 WTrackTableView::item:selected,
-#LibraryBPMButton::item:selected {
+#LibraryBPMButton::item:selected,
+#LibraryPlayedCheckbox::item:selected {
   color: #fff;
   background-color: #5e4507;
 }
@@ -2088,7 +2088,7 @@ WLibrarySidebar::item:!selected:focus {
 /* Use the native focus decoration */
 /* This is for all cells including Played and Location */
 WTrackTableView,
-/* This is for the BPM cell */
+/* This is for the BPM and play count cells */
 WTrackTableView QCheckBox:focus {
   outline: 1px solid #fff;
 }
@@ -2143,6 +2143,12 @@ WLibrary QPlainTextEdit,
     #LibraryBPMSpinBox::down-button {
       image: url(skin:../LateNight/classic/buttons/btn__lib_bpm_down.svg) no-repeat;
     }
+#LibraryPlayedCheckbox::indicator:checked {
+  image: url(skin:../LateNight/classic/buttons/btn__lib_checkbox_checked.svg);
+}
+#LibraryPlayedCheckbox::indicator:unchecked {
+  image: url(skin:../LateNight/classic/buttons/btn__lib_checkbox.svg);
+}
 
 WCueMenuPopup QPushButton:focus {
   outline: none;
@@ -2363,13 +2369,17 @@ WSearchLineEdit {
 
 
 /************ Library feature controls / tree view / table view *************/
-WLibrary QRadioButton::indicator:checked {
-  background: url(skin:../LateNight/classic/buttons/btn__lib_radio_button_on_yellow.svg) center center;
-}
 
-WLibrary QRadioButton::indicator:unchecked {
-  background: url(skin:../LateNight/classic/buttons/btn__lib_radio_button_off.svg) center center;
-}
+/* Additional space */
+#LibraryFeatureControls QRadioButton {
+  margin: 2px 3px 2px 3px;
+  }
+  #LibraryFeatureControls QRadioButton::indicator:checked {
+    image: url(skin:../LateNight/classic/buttons/btn__lib_radio_button_on_yellow.svg) center center;
+  }
+  #LibraryFeatureControls QRadioButton::indicator:unchecked {
+    image: url(skin:../LateNight/classic/buttons/btn__lib_radio_button_off.svg) center center;
+  }
 
 /* triangle for closed/opened branches in treeview */
 /* closed */
@@ -2509,9 +2519,20 @@ WSearchLineEdit::item:selected,
 #SkinSettingsMixerToggle[hover="true"],
 #SkinSettingsLabelButton[hover="true"] {
   background-color: #5E4507;
-  color: white;
+  color: #fff;
   /* remove OS focus indicator */
   outline: none;
+  }
+  /* required on Windows since the QAbstractItemViews don't inherit styles from
+     the respective QComboBoxes */
+  WEffectSelector QAbstractItemView,
+  WEffectChainPresetSelector QAbstractItemView,
+  WSearchLineEdit QAbstractItemView {
+    selection-color: #fff;
+    selection-background-color: #5E4507;
+    border-radius: 1px;
+    border: 0px;
+    outline: none;
   }
   /* checked item */
   WEffectSelector::item:checked,
@@ -2595,15 +2616,6 @@ QPlainTextEdit QMenu::item:disabled {
   WTrackMenu QMenu::right-arrow:selected {
     image: url(skin:../LateNight/classic/style/menu_arrow_white.svg);
   }
-
-/* This is the only way to select the 'Played' checkbox.
-  Note that this also selects the BPM lock. */
-  WTrackTableView::indicator:checked {
-    image: url(skin:../LateNight/classic/buttons/btn__lib_checkbox_checked.svg);
-    }
-  WTrackTableView::indicator:unchecked {
-    image: url(skin:../LateNight/classic/buttons/btn__lib_checkbox.svg);
-    }
 
   #MainMenu QMenu::separator,
   WLibrarySidebar QMenu::separator,
